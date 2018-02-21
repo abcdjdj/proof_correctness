@@ -1,0 +1,60 @@
+\documentclass[10pt,a4paper]{article}
+\title{Insertion Sort}
+\date{}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% For algorithms
+\usepackage[]{algorithm2e}
+
+\usepackage{titling}
+
+\setlength{\droptitle}{-10em} 
+
+\begin{document}
+\maketitle
+
+\begin{algorithm}[H]
+ \KwData{An array A[0 ... n-1] of size n}
+ \KwResult{Sorted array A in non decreasing order i.e $A[0]<=A[1]<=...<=A[n-1]$ }
+ $i \leftarrow 1$\; 
+ \While{$i < n$} {
+  $tmp \leftarrow A[i]$\;
+  $j \leftarrow i-1$\;
+  \tcc{Insert A[i] into sorted sub-array A[0..i-1]}
+  	\While{$j >= 0$ and $A[j] > tmp$} {
+  		$A[j+1] \leftarrow A[j]$\;
+  		$j \leftarrow j - 1$\;
+  	}
+  	$A[j+1] \leftarrow tmp$\;
+  	$i \leftarrow i + 1$\;
+ }
+ \caption{Insertion Sort}
+\end{algorithm}
+
+\section{Proof of Correctness}
+\subsection{Invariant}
+At the beginning of each outer loop, the sub array $A[0 \text{ .. } i-1]$ is sorted 
+and consists of the same elements that were originally in $A[0 \text{ .. } i-1]$.
+
+\subsection{Initialization}
+Initially, $i = 1$ and hence the sub array $A[0 \text{ .. } i-1]$ consists of only one 
+element i.e $A[0]$. As a single element is trivially sorted, the invariant holds.
+
+\subsection{Maintenance}
+The inner while loop shifts elements $A[i-1]$, $A[i-2]$ and so on by one position to
+the right until the right position for $A[i]$ is found. The element $A[i]$ is then 
+inserted into it's correct position. The sub array $A[0 \text{ .. } i = j+1]$ contains 
+the original elements of $A[0 \text{ .. } i = j+1]$  but in ascending order. Incrementing $i$
+to $i + 1$ for the next iteration, then preserves the invariant.
+
+\subsection{Termination}
+The procedure terminates when $ i >= n$. As $i$ is always incremented by 1, when the
+outer while loop terminates $i$ will always be equal to $n$. According to the invariant, when $i = n$,
+the sub array $A[0 \text{ .. } n-1]$ must contain the same original elements of the array
+but in ascending order. In other words, the array $A$ is now sorted. $\blacksquare$
+
+	
+\end{document}

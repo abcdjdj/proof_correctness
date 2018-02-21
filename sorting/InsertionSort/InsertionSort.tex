@@ -7,7 +7,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 % For algorithms
-\usepackage[]{algorithm2e}
+\usepackage[linesnumbered,ruled,lined,boxed,commentsnumbered]{algorithm2e}
 
 \usepackage{titling}
 
@@ -19,17 +19,21 @@
 \begin{algorithm}[H]
  \KwData{An array A[0 ... n-1] of size n}
  \KwResult{Sorted array A in non decreasing order i.e $A[0]<=A[1]<=...<=A[n-1]$ }
+ \Begin {
  $i \leftarrow 1$\; 
  \While{$i < n$} {
   $tmp \leftarrow A[i]$\;
   $j \leftarrow i-1$\;
+  \BlankLine
   \tcc{Insert A[i] into sorted sub-array A[0..i-1]}
   	\While{$j >= 0$ and $A[j] > tmp$} {
   		$A[j+1] \leftarrow A[j]$\;
   		$j \leftarrow j - 1$\;
   	}
+    \BlankLine
   	$A[j+1] \leftarrow tmp$\;
   	$i \leftarrow i + 1$\;
+ }
  }
  \caption{Insertion Sort}
 \end{algorithm}

@@ -1,0 +1,64 @@
+\documentclass[10pt,a4paper]{article}
+\title{Selection Sort}
+\date{}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% For algorithms
+\usepackage[linesnumbered,ruled,lined,boxed,commentsnumbered]{algorithm2e}
+
+\usepackage{titling}
+
+\setlength{\droptitle}{-10em} 
+
+\begin{document}
+\maketitle
+
+\begin{algorithm}[H]
+ \KwData{An array A[0 ... n-1] of size n}
+ \KwResult{Sorted array A in non decreasing order i.e $A[0]<=A[1]<=...<=A[n-1]$ }
+  \BlankLine
+  \Begin {
+  \For{$i \leftarrow 0$ to $n-2$} {
+  	$min \leftarrow i$\;
+  	\tcc{Find minimum element of sub-array A[i..n-1]}
+  	\For{$j \leftarrow i+1$ to $n-1$} {
+  		\If{$A[min] > A[j]$}{
+  			$min \leftarrow j$\;
+  		}
+  		$j \leftarrow j+1$\; 
+  	}
+  	\BlankLine
+  	\tcc{Swap A[i] and A[min]}
+  	$tmp \leftarrow A[min]$\;
+  	$A[min] \leftarrow A[i]$\;
+  	$A[i] \leftarrow tmp$\;
+  	\BlankLine
+  	$i \leftarrow i+1$\;
+ }
+ }
+ \caption{Selection Sort}
+\end{algorithm}
+
+\section{Proof of Correctness}
+\subsection{Invariant}
+At the beginning of each outer for loop, the sub array $A[0 \text{ .. } i-1]$ consists of the first $i$ smallest elements of the entire array A, in sorted order.
+
+\subsection{Initialization}
+Initially, $i = 0$ and hence the sub array $A[0 \text{ .. } i-1]$ is an empty list and consists of 0 
+elements. As the list is empty, the invariant trivially holds.
+
+\subsection{Maintenance}
+The inner for loop runs from $j \leftarrow i+1$ through $n-1$. It is not too difficult to see that when the inner for loop terminates, the variable $min$ contains the index of the smallest element in the sub array $A[i \text{ .. } n-1]$. $A[min]$ is then swapped with $A[i]$, thereby giving us the first $i+1$ smallest elements in $A[0 \text{ .. } i]$, that too in sorted order. Incrementing $i$ then makes the invariant hold at the start of the next iteration.
+
+\subsection{Termination}
+The procedure terminates when $ i > n-2$. As $i$ is always incremented by 1, when the
+outer while loop terminates $i$ will always be equal to $n-1$. According to the invariant, 
+when $i = n-1$, the sub array $A[0 \text{ .. } n-2]$ must contain the first $(n-1)$ smallest elements
+of A in sorted order. By elimination, $A[n-1]$ must now contain the $n^{th}$ smallest element.
+In other words, the array $A$ is now sorted. $\blacksquare$
+
+	
+\end{document}

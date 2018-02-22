@@ -1,0 +1,61 @@
+\documentclass[10pt,a4paper]{article}
+\title{Bubble Sort}
+\date{}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% For algorithms
+\usepackage[linesnumbered,ruled,lined,boxed,commentsnumbered]{algorithm2e}
+
+\usepackage{titling}
+
+\setlength{\droptitle}{-10em}
+
+\begin{document}
+\maketitle
+
+\begin{algorithm}[H]
+ \KwData{An array A[0 ... n-1] of size n}
+ \KwResult{Sorted array A in non decreasing order i.e $A[0]<=A[1]<=...<=A[n-1]$ }
+  \BlankLine
+  \Begin {
+  \For{$i \leftarrow 0$ to $n-2$} {
+	\tcc{Shift the maximum element of sub-array A[0..n-i-1] to A[n-i-1] by adjacent pairwise swapping}
+  	\For{$j \leftarrow 0$ to $n-i-2$} {
+  		\If{$A[j] > A[j+1]$}{
+			\BlankLine
+			\tcc{Swap A[j] and A[j+1]}
+			$tmp \leftarrow A[j]$\;
+			$A[j] \leftarrow A[j+1]$\;
+			$A[j+1] \leftarrow tmp$\;
+  		}
+  		$j \leftarrow j+1$\;
+  	}
+  	\BlankLine
+  	$i \leftarrow i+1$\;
+ }
+ }
+ \caption{Bubble Sort}
+\end{algorithm}
+
+\section{Proof of Correctness}
+\subsection{Invariant}
+At the beginning of each outer for loop, the sub array $A[n-i \text{ .. } n-1]$ consists of the first $(n-1)-(n-i)+1 = i$ largest elements of the entire array A, in sorted order i.e $A[n-i] <= A[n-i+1] <= \text{ .. } <= A[n-1]$.
+
+\subsection{Initialization}
+Initially, $i = 0$ and hence the sub array $A[n \text{ .. } n-1]$ is an empty list and consists of 0 
+elements. As the list is empty, the invariant trivially holds.
+
+\subsection{Maintenance}
+The inner for loop runs from $j \leftarrow 0$ through $n-i-2$. By performing adjacent comparisons and swaps between $A[j]$ and $A[j+1]$, we ensure that the the maximum element of sub array $A[0 \text{ .. } n-i-1]$ is shifted and placed at $A[n-i-1]$ giving us the first $(n-1) - (n-i-1) + 1 = i+1$ largest elements in $A[n-i-1 \text{ .. } n-1]$, that too in sorted order. Incrementing $i$ to $i+1$ then makes the invariant hold at the start of the next iteration.
+
+\subsection{Termination}
+The procedure terminates when $ i > n-2$. As $i$ is always incremented by 1, when the
+outer while loop terminates $i$ will always be equal to $n-1$. According to the invariant, 
+when $i = n-1$, the sub array $A[1 \text{ .. } n-1]$ must contain the first $(n-1)$ largest elements
+of A in sorted order. By elimination, $A[0]$ must now contain the $n^{th}$ largest element (the smallest element).
+In other words, the array $A$ is now sorted. $\blacksquare$
+
+\end{document}

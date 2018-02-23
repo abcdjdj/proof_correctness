@@ -1,0 +1,70 @@
+\documentclass[10pt,a4paper]{article}
+\title{Sieve of Eratosthenes}
+\date{}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% For algorithms
+\usepackage[linesnumbered,ruled,lined,boxed,commentsnumbered]{algorithm2e}
+
+\usepackage{titling}
+
+\setlength{\droptitle}{-10em}
+
+\begin{document}
+\maketitle
+
+\begin{algorithm}[H]
+	\KwData{A postive integer $n \geq 2$}
+	\KwResult{An array $M[2 \text{ .. } n]$ such that $M[i] = 0$ if $i$ is
+	prime and 1 if $i$ is composite}
+	\BlankLine
+	\Begin {
+		Let $M[2 \text{ .. } n]$ be initialized with all elements = 0\;
+		\BlankLine
+		\For{$i \leftarrow 2$ to $n$} {
+			\If{$M[i] \neq 1$} {
+				\For{$j \leftarrow 2i$ and $j \leq n$} {
+					$M[j] \leftarrow 1$\;
+					$j \leftarrow j+i$\;
+				}
+			}
+			$i \leftarrow i+1$\;
+		}
+		return $M$\;
+	}
+\caption{Sieve of Eratosthenes}
+\end{algorithm}
+
+\section{Proof of Correctness (By Induction)}
+	\subsection{Inductive Hypothesis}
+	Let $P(i) :=$ At the beginning of the outer for loop, all prime	numbers
+	$< i$ have been found (set to 0 in M) and the multiples of all these
+	primes have been marked (set to 1) in M.       
+
+	\subsection{Base Case}
+	Initially, $i = 2$. As there are no prime numbers less than 2 and our
+	indexing for M begins from 2, P(2) is trivially true.
+
+	\subsection{Inductive Step}
+	Assume the $P(k)$ to be true for some $k \geq 2$. When $i = k+1$, we have
+	two cases. If $k$ is composite, it can expressed as the product of
+	primes i.e $k = p_1^{\alpha_{1}} p_2^{\alpha_{2}} \text{ ... } p_n^{\alpha_{n}}$
+	where $p_{j}$ is a prime number $< k$. According to our assumption, this would mean
+	that $k$ has already been marked (set to 1 in M). The inner loop will not execute.
+	\BlankLine
+	If $k$ is indeed prime, then none of the previous marking procedures would
+	have affected $M[k]$. As $M[k]$ was initially set 0, it will continue to remain 0.
+	In addition to this, the inner loop will execute successfully and mark all multiples
+	of $k$.	
+	\BlankLine
+	In both the cases, we have now found all prime numbers less than $k+1$ and marked
+	their multiples i.e $P(k+1)$ holds true.
+
+	\subsection{Termination}
+	The procedure terminates when $i > n$. As $i$ is always incremented by 1, $i$ will always
+	be equal to $n+1$ when the procedure terminates. $\therefore P(n+1)$ is true i.e all prime
+	numbers $ < n+1$ have been found. $\blacksquare$
+\end{document}

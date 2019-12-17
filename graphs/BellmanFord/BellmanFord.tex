@@ -1,0 +1,76 @@
+\documentclass[10pt,a4paper]{article}
+\title{Bellman-Ford}
+\date{}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+% For algorithms
+\usepackage[linesnumbered,ruled,lined,boxed,commentsnumbered]{algorithm2e}
+
+\usepackage{titling}
+
+\setlength{\droptitle}{-10em}
+
+\begin{document}
+\maketitle
+
+\begin{algorithm}[H]
+	\KwData{A weighted graph $G(V,E)$ with weight function $W : E \rightarrow R$ and the source vertex $s$}
+	\KwResult{Distance array $d$ which contains minimum distances from $s$ to all other vertices. If a negative cycle is
+	found, then it is reported}
+	\BlankLine
+	\Begin {
+		\tcc{ Initialize distance array}
+		\For{$i \leftarrow 1$ to $\mid V \mid$} {
+			$d[i] \leftarrow \infty$
+		}
+		$d[s] \leftarrow 0$
+
+		\BlankLine
+		\BlankLine
+		\tcc{Relax all edges $\mid V \mid - 1$ times}
+		\For{$i \leftarrow 1$ to $\mid V \mid - 1$} {
+			\For{each edge $e(u, v) \in E$} {
+				RelaxEdge($u$, $v$, $W$)
+			}
+		}
+
+		\BlankLine
+		\BlankLine
+		\tcc{Check for negative cycle}
+		\For{each edge $e(u, v) \in E$} {
+			\If{RelaxEdge($u$, $v$, $W$) $= True$} {
+				Report negative cycle
+			}
+		}
+		Return $d$
+	}
+\caption{Bellman-Ford}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\KwData{An edge $e(u, v)$ and weight function $W$}
+	\KwResult{Returns true if the edge $e$ is relaxed, else false}
+	\BlankLine
+	\Begin {
+		\If{$d[u] + W(u, v) < d[v]$}{
+			$d[v] \leftarrow d[u] + W(u, v)$\\
+			Return True
+		}
+
+		Return False
+	}
+\caption{RelaxEdge}
+\end{algorithm}
+
+\section{Proof of Correctness}
+	\subsection{Invariant}
+
+	\subsection{Initialization}
+
+	\subsection{Maintenance}
+
+	\subsection{Termination}
+\end{document}
